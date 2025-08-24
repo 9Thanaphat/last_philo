@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:02:47 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 21:10:29 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 22:31:40 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include <limits.h>
 #include <pthread.h>
 
 #define RST		"\033[0m"

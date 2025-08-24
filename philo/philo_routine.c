@@ -6,35 +6,35 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:01:36 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 21:01:36 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:33:08 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static long	think_time_ms(t_philo *p)
+static long	cal_think_time(t_philo *p)
 {
-	long	left;
+	long	time_left;
 	long	guard;
-	long	slack;
-	long	t;
+	long	safe_time;
+	long	think_time;
 
-	left = (long)p->table->time_to_die
+	time_left = (long)p->table->time_to_die
 		- (get_current_time() - get_long(&p->philo_mtx, &p->last_meal_time));
-	if (left <= (long)p->table->time_to_eat)
+	if (time_left <= (long)p->table->time_to_eat)
 		return (0);
 	guard = (long)p->table->time_to_die / 20;
 	if (guard < 1)
 		guard = 1;
 	if (guard > 6)
 		guard = 6;
-	slack = left - (long)p->table->time_to_eat - guard;
-	if (slack <= 0)
+	safe_time = time_left - (long)p->table->time_to_eat - guard;
+	if (safe_time <= 0)
 		return (0);
-	t = slack / 2;
-	if (t < 1)
-		t = 1;
-	return (t);
+	think_time = safe_time / 2;
+	if (think_time < 1)
+		think_time = 1;
+	return (think_time);
 }
 
 void	thinking(t_philo *p)
@@ -42,27 +42,10 @@ void	thinking(t_philo *p)
 	long	t;
 
 	print_status(THINKING, p);
-	t = think_time_ms(p);
+	t = cal_think_time(p);
 	if (t > 0)
 		ft_usleep((size_t)t, p->table);
 }
-
-// void thinking(t_philo *p)
-// {
-// 	size_t	t;
-
-// 	print_status(THINKING, p);
-// 	if (p->table->philo_nbr % 2)
-// 	{
-// 		if (p->table->time_to_eat > 1)
-// 			t = p->table->time_to_eat - 1;
-// 		else
-// 			t = 0;
-// 		ft_usleep(t, p->table);
-// 	}
-// 	else
-// 		ft_usleep(1, p->table);
-// }
 
 void	sleeping(t_philo *p)
 {
