@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:02:47 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 22:31:40 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 22:46:37 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				limit_meal_nbr;
-	unsigned long	start_simulation_time;
+	size_t			start_simulation_time;
 	bool			end_simulation;
 	bool			all_thread_ready;
 	t_mtx			print_mutex;
@@ -103,6 +103,6 @@ void			set_long(t_mtx *mutex, long *dest, long value);
 //utils.c
 void			error_exit(const char *message);
 void			*safe_malloc(size_t bytes);
-unsigned long	get_current_time(void);
-int				ft_usleep(unsigned long ms, t_table *table);
-unsigned long	timestamp(t_table *table);
+size_t			get_current_time(void);
+int				ft_usleep(size_t ms, t_table *table);
+size_t			timestamp(t_table *table);

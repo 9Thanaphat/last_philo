@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:57 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 20:45:39 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 22:47:52 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	*monitor(void *arg)
 			return (NULL);
 		if (t->limit_meal_nbr > 0 && philo_full(t))
 			return (NULL);
-		usleep(100);
+		usleep(50);
 	}
 	return (NULL);
 }

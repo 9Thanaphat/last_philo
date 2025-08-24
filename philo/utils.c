@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:38 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 21:02:23 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 22:46:57 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	*safe_malloc(size_t bytes)
 	return (ret);
 }
 
-unsigned long	timestamp(t_table *table)
+size_t	timestamp(t_table *table)
 {
 	return (get_current_time() - table->start_simulation_time);
 }
 
-unsigned long	get_current_time(void)
+size_t	get_current_time(void)
 {
 	struct timeval	time;
 
