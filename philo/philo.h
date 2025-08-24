@@ -6,8 +6,6 @@
 #include <limits.h>
 #include <pthread.h>
 
-#define DEBUG	false
-
 #define RST		"\033[0m"
 #define RED		"\033[1;31m"
 
