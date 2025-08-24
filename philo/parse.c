@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:45:08 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 22:31:28 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 22:37:15 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,25 @@ void	parse(t_table *table, char **av)
 
 	if (!is_positive_int(av[1]) || !is_positive_int(av[2])
 		|| !is_positive_int(av[3]) || !is_positive_int(av[4]))
-		error_exit("input error");
+		error_exit("input error: arguments must be positive integers");
 	if (av[5] && !is_positive_int(av[5]))
-		error_exit("input error");
+		error_exit("input error: arguments must be positive integers");
 	table->philo_nbr = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
 	if (table->philo_nbr < 1)
-		error_exit("philo nbr must more than 0.");
+		error_exit("invalid number_of_philosophers: must be >= 1");
 	if (table->time_to_die < 60 || table->time_to_eat < 60
 		|| table->time_to_sleep < 60)
-		error_exit("use time stamp more than 60ms");
+		error_exit("invalid time value: time_to_die, time_to_eat, and "
+			"time_to_sleep must each be >= 60 ms");
 	limit_meal = -1;
 	if (av[5])
 	{
 		limit_meal = ft_atoi(av[5]);
 		if (limit_meal < 1)
-			error_exit("limit meal nbr must more than zero.");
+			error_exit("number_of_times_each_philosopher_must_eat: must >= 1");
 	}
 	table->limit_meal_nbr = limit_meal;
 }
