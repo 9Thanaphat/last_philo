@@ -12,45 +12,45 @@
 
 #include "philo.h"
 
-// static void thinking(t_philo *p) //dynamic method
-// {
-//     print_status(THINKING, p);
-
-//     long now   = get_current_time();
-//     long last  = get_long(&p->philo_mtx, &p->last_meal_time);
-//     long left  = (long)p->table->time_to_die - (now - last); // เวลาที่เหลือก่อนตาย
-//     long need  = (long)p->table->time_to_eat;                // เวลาอย่างน้อยที่ต้องเหลือไว้สำหรับกินรอบหน้า
-//     if (left <= need) return;
-
-//     // กัน jitter ของ OS หน่อย (~5% ของ TTD, บีบให้อยู่ 1..6 ms)
-//     long guard = p->table->time_to_die / 20;
-//     if (guard < 1) guard = 1;
-//     if (guard > 6) guard = 6;
-
-//     long slack = left - need - guard;   // เวลาปลอดภัยที่เราจะเอาไปคิดได้
-//     if (slack <= 0) return;
-
-//     long t = slack / 2;                 // ใช้แค่ครึ่ง เพื่อลด lockstep/pileup
-//     if (t < 1) t = 1;
-//     ft_usleep((size_t)t, p->table);
-// }
-
-void thinking(t_philo *p)
+static void thinking(t_philo *p) //dynamic method
 {
-	size_t	t;
+    print_status(THINKING, p);
 
-	print_status(THINKING, p);
-	if (p->table->philo_nbr % 2)
-	{
-		if (p->table->time_to_eat > 1)
-			t = p->table->time_to_eat - 1;
-		else
-			t = 0;
-		ft_usleep(t, p->table);
-	}
-	else
-		ft_usleep(1, p->table);
+    long now   = get_current_time();
+    long last  = get_long(&p->philo_mtx, &p->last_meal_time);
+    long left  = (long)p->table->time_to_die - (now - last); // เวลาที่เหลือก่อนตาย
+    long need  = (long)p->table->time_to_eat;                // เวลาอย่างน้อยที่ต้องเหลือไว้สำหรับกินรอบหน้า
+    if (left <= need) return;
+
+    // กัน jitter ของ OS หน่อย (~5% ของ TTD, บีบให้อยู่ 1..6 ms)
+    long guard = p->table->time_to_die / 20;
+    if (guard < 1) guard = 1;
+    if (guard > 6) guard = 6;
+
+    long slack = left - need - guard;   // เวลาปลอดภัยที่เราจะเอาไปคิดได้
+    if (slack <= 0) return;
+
+    long t = slack / 2;                 // ใช้แค่ครึ่ง เพื่อลด lockstep/pileup
+    if (t < 1) t = 1;
+    ft_usleep((size_t)t, p->table);
 }
+
+// void thinking(t_philo *p)
+// {
+// 	size_t	t;
+
+// 	print_status(THINKING, p);
+// 	if (p->table->philo_nbr % 2)
+// 	{
+// 		if (p->table->time_to_eat > 1)
+// 			t = p->table->time_to_eat - 1;
+// 		else
+// 			t = 0;
+// 		ft_usleep(t, p->table);
+// 	}
+// 	else
+// 		ft_usleep(1, p->table);
+// }
 
 void	sleeping(t_philo *philo)
 {

@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-void print_status(t_philo_status status, t_philo *philo)
+/*void print_status(t_philo_status status, t_philo *philo)
 {
 	unsigned long	ts;
 	int				id;
@@ -35,5 +35,28 @@ void print_status(t_philo_status status, t_philo *philo)
 	else if (status == DIED)
 		printf("%lu %d died\n", ts, id);
 	pthread_mutex_unlock(&philo->table->print_mutex);
+}*/
+
+void print_status(t_philo_status s, t_philo *p)
+{
+    pthread_mutex_lock(&p->table->print_mutex);
+
+    // ไม่ต้องไปเช็ค end_simulation สำหรับ DIED (พิมพ์เสมอ)
+    if (s != DIED) {
+        bool ended = get_bool(&p->table->table_mutex, &p->table->end_simulation);
+        if (ended) { pthread_mutex_unlock(&p->table->print_mutex); return; }
+    }
+
+    unsigned long ts = timestamp(p->table);
+    int id = p->philo_id;
+
+    if (s == TAKE_FIRST_FORK || s == TAKE_SECOND_FORK) printf("%lu %d has taken a fork\n", ts, id);
+    else if (s == EATING)   printf("%lu %d is eating\n", ts, id);
+    else if (s == SLEEPING) printf("%lu %d is sleeping\n", ts, id);
+    else if (s == THINKING) printf("%lu %d is thinking\n", ts, id);
+    else if (s == DIED)     printf("%lu %d died\n", ts, id);
+
+    pthread_mutex_unlock(&p->table->print_mutex);
 }
+
 
