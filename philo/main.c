@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:50 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 19:44:50 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:44:52 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	main(int ac, char **av)
 		parse(&table, av);
 	}
 	else
-		error_exit("use : ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]");
+		error_exit("use : ./philo number_of_philosophers time_to_die"
+			" time_to_eat time_to_sleep "
+			"[number_of_times_each_philosopher_must_eat]");
 	data_init(&table);
 	simulation_start(&table);
 	free_philo(&table);

@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:38 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 19:47:31 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:02:23 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ unsigned long	timestamp(t_table *table)
 	return (get_current_time() - table->start_simulation_time);
 }
 
-unsigned long get_current_time(void)
+unsigned long	get_current_time(void)
 {
 	struct timeval	time;
 
@@ -50,9 +50,8 @@ int	ft_usleep(size_t ms, t_table *table)
 	while ((get_current_time() - start) < ms)
 	{
 		if (get_bool(&table->table_mutex, &table->end_simulation))
-			break;
+			break ;
 		usleep(50);
 	}
 	return (0);
 }
-

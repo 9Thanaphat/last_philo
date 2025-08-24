@@ -1,8 +1,7 @@
 NAME    = philo
 
 CC      = cc
-CFLAG   =
-LDFLAG  = -pthread
+CFLAG   = -Wall -Wextra -Werror -pthread
 
 SOURCE  = main.c \
 			parse.c \
@@ -10,6 +9,7 @@ SOURCE  = main.c \
 			getter.c \
 			setter.c \
 			monitor.c \
+			philo_routine.c \
 			simulation.c \
 			print.c \
 			utils.c \
@@ -21,7 +21,7 @@ OFILE   = $(SOURCE:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OFILE)
-	$(CC) $(CFLAG) $(OFILE) -o $(NAME) $(LDFLAG)
+	$(CC) $(CFLAG) $(OFILE) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAG) -I $(HEADER) -c $< -o $@

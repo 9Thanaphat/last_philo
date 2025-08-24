@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:45:08 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 19:45:09 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:46:13 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	parse(t_table *table, char **av)
 	int	limit_meal;
 
 	if (!check_valid(av[1]) || !check_valid(av[2])
-	|| !check_valid(av[3]) || !check_valid(av[4]))
+		|| !check_valid(av[3]) || !check_valid(av[4]))
 		error_exit("input error, use number only");
 	if (av[5] && !check_valid(av[5]))
 		error_exit("input error, use number only");

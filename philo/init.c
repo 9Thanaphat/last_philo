@@ -6,13 +6,13 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:46 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 19:44:46 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:42:34 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void assign_fork(t_philo *philo, t_fork *forks, int i)
+static void	assign_fork(t_philo *philo, t_fork *forks, int i)
 {
 	t_fork	*left;
 	t_fork	*right;
@@ -21,17 +21,17 @@ void assign_fork(t_philo *philo, t_fork *forks, int i)
 	right = &forks[(i + 1) % philo->table->philo_nbr];
 	if (philo->philo_id % 2)
 	{
-		philo->first_fork  = left;
+		philo->first_fork = left;
 		philo->second_fork = right;
 	}
 	else
 	{
-		philo->first_fork  = right;
+		philo->first_fork = right;
 		philo->second_fork = left;
 	}
 }
 
-void	philo_init(t_table *table)
+static void	philo_init(t_table *table)
 {
 	int		i;
 	t_philo	*philo;
@@ -49,7 +49,6 @@ void	philo_init(t_table *table)
 		assign_fork(philo, table->forks, i);
 	}
 }
-
 
 void	data_init(t_table *table)
 {

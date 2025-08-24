@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:42 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 19:44:43 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:41:27 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ int	get_int(t_mtx *mutex, int *value)
 	pthread_mutex_unlock(mutex);
 	return (ret);
 }
-

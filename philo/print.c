@@ -6,57 +6,44 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:45:14 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 19:45:16 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:50:36 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*void print_status(t_philo_status status, t_philo *philo)
+static void	print_message(t_philo_status s, unsigned long ts, int id)
 {
-	unsigned long	ts;
-	int				id;
-	bool			ended;
-
-	ts = timestamp(philo->table);
-	id = philo->philo_id;
-	ended = get_bool(&philo->table->table_mutex, &philo->table->end_simulation);
-	if (ended && status != DIED)
-		return;
-	pthread_mutex_lock(&philo->table->print_mutex);
-	if ((status == TAKE_FIRST_FORK || status == TAKE_SECOND_FORK) && !ended)
+	if (s == TAKE_FIRST_FORK || s == TAKE_SECOND_FORK)
 		printf("%lu %d has taken a fork\n", ts, id);
-	else if (status == EATING && !ended)
+	else if (s == EATING)
 		printf("%lu %d is eating\n", ts, id);
-	else if (status == SLEEPING && !ended)
+	else if (s == SLEEPING)
 		printf("%lu %d is sleeping\n", ts, id);
-	else if (status == THINKING && !ended)
+	else if (s == THINKING)
 		printf("%lu %d is thinking\n", ts, id);
-	else if (status == DIED)
+	else if (s == DIED)
 		printf("%lu %d died\n", ts, id);
-	pthread_mutex_unlock(&philo->table->print_mutex);
-}*/
-
-void print_status(t_philo_status s, t_philo *p)
-{
-    pthread_mutex_lock(&p->table->print_mutex);
-
-    // ไม่ต้องไปเช็ค end_simulation สำหรับ DIED (พิมพ์เสมอ)
-    if (s != DIED) {
-        bool ended = get_bool(&p->table->table_mutex, &p->table->end_simulation);
-        if (ended) { pthread_mutex_unlock(&p->table->print_mutex); return; }
-    }
-
-    unsigned long ts = timestamp(p->table);
-    int id = p->philo_id;
-
-    if (s == TAKE_FIRST_FORK || s == TAKE_SECOND_FORK) printf("%lu %d has taken a fork\n", ts, id);
-    else if (s == EATING)   printf("%lu %d is eating\n", ts, id);
-    else if (s == SLEEPING) printf("%lu %d is sleeping\n", ts, id);
-    else if (s == THINKING) printf("%lu %d is thinking\n", ts, id);
-    else if (s == DIED)     printf("%lu %d died\n", ts, id);
-
-    pthread_mutex_unlock(&p->table->print_mutex);
 }
 
+void	print_status(t_philo_status s, t_philo *p)
+{
+	bool			ended;
+	int				id;
+	unsigned long	ts;
 
+	pthread_mutex_lock(&p->table->print_mutex);
+	if (s != DIED)
+	{
+		ended = get_bool(&p->table->table_mutex, &p->table->end_simulation);
+		if (ended)
+		{
+			pthread_mutex_unlock(&p->table->print_mutex);
+			return ;
+		}
+	}
+	ts = timestamp(p->table);
+	id = p->philo_id;
+	print_message(s, ts, id);
+	pthread_mutex_unlock(&p->table->print_mutex);
+}
