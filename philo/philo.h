@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:02:47 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 21:07:32 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:10:29 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,11 @@ void			*monitor(void *arg);
 
 //simulation.c
 void			simulation_start(t_table *table);
+
+//philo_routine.c
 void			thinking(t_philo *p);
 void			sleeping(t_philo *p);
+void			eating(t_philo *p);
 
 //print.c
 void			print_status(t_philo_status status, t_philo *p);
@@ -104,4 +107,3 @@ void			*safe_malloc(size_t bytes);
 unsigned long	get_current_time(void);
 int				ft_usleep(unsigned long ms, t_table *table);
 unsigned long	timestamp(t_table *table);
-long			think_time_ms(t_philo *p);
