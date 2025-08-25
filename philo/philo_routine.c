@@ -6,13 +6,13 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:01:36 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/25 09:20:35 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/25 09:24:38 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	cal_think_time(t_philo *p)
+static long	cal_think_time(t_philo *p)
 {
 	long	time_left;
 	long	guard;

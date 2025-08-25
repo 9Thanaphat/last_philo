@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:02:47 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/25 09:22:09 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/25 09:24:35 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void			data_init(t_table *table);
 void			*monitor(void *arg);
 
 //simulation.c
-long			cal_think_time(t_philo *p);
 void			simulation_start(t_table *table);
 
 //philo_routine.c
