@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:31 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/25 09:24:51 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/25 09:34:26 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,8 @@ static void	*philo_routine(void *arg)
 	p = (t_philo *)arg;
 	while (!get_bool(&p->table->table_mutex, &p->table->all_thread_ready))
 		usleep(200);
-	if (p->table->philo_nbr % 2 == 0)
-	{
-		if (p->philo_id % 2 == 0)
-			ft_usleep(p->table->time_to_eat / 2, p->table);
-	}
-	else
-	{
-		if (p->philo_id % 2 == 0)
-			ft_usleep(p->table->time_to_eat, p->table);
-	}
+	if (p->philo_id % 2 == 0)
+		ft_usleep(p->table->time_to_eat, p->table);
 	while (!get_bool(&p->table->table_mutex, &p->table->end_simulation))
 	{
 		if (get_bool(&p->philo_mtx, &p->full))
