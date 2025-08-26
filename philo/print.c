@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:45:14 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 22:53:43 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/26 08:42:41 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,18 @@ static void	print_message(t_philo_status s, size_t ts, int id)
 
 void	print_status(t_philo_status s, t_philo *p)
 {
-	bool			ended;
-	int				id;
 	size_t	ts;
+	int		id;
 
+	if (s != DIED && get_bool(&p->table->table_mutex,
+			&p->table->end_simulation))
+		return ;
 	pthread_mutex_lock(&p->table->print_mutex);
-	if (s != DIED)
+	if (s != DIED && get_bool(&p->table->table_mutex,
+			&p->table->end_simulation))
 	{
-		ended = get_bool(&p->table->table_mutex, &p->table->end_simulation);
-		if (ended)
-		{
-			pthread_mutex_unlock(&p->table->print_mutex);
-			return ;
-		}
+		pthread_mutex_unlock(&p->table->print_mutex);
+		return ;
 	}
 	ts = timestamp(p->table);
 	id = p->philo_id;

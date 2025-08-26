@@ -6,43 +6,34 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:01:36 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/25 09:24:38 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/26 08:57:35 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static long	cal_think_time(t_philo *p)
-{
-	long	time_left;
-	long	guard;
-	long	safe_time;
-	long	think_time;
-
-	time_left = (long)p->table->time_to_die
-		- (get_current_time() - get_long(&p->philo_mtx, &p->last_meal_time));
-	if (time_left <= (long)p->table->time_to_eat)
-		return (0);
-	guard = (long)p->table->time_to_die / 20;
-	if (guard < 1)
-		guard = 1;
-	if (guard > 6)
-		guard = 6;
-	safe_time = time_left - (long)p->table->time_to_eat - guard;
-	if (safe_time <= 0)
-		return (0);
-	think_time = safe_time / 2;
-	if (think_time < 1)
-		think_time = 1;
-	return (think_time);
-}
-
 void	thinking(t_philo *p)
 {
 	long	t;
 
+	t = 0;
 	print_status(THINKING, p);
-	t = cal_think_time(p);
+	if (p->table->time_to_eat >= p->table->time_to_sleep)
+	{
+		if (p->table->philo_nbr % 2 != 0)
+			t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
+		else
+			t = (long)p->table->time_to_eat - (long)p->table->time_to_sleep;
+	}
+	else
+	{
+		if (p->table->philo_nbr % 2 != 0)
+			t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
+		else
+			t = 0;
+	}
+	if (t < 0)
+		t = 0;
 	if (t > 0)
 		ft_usleep((size_t)t, p->table);
 }

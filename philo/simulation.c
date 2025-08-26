@@ -6,73 +6,21 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:31 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/25 10:01:46 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/26 08:55:08 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static size_t	start_want_delay(t_philo *p)
-{
-	size_t	want;
-
-	want = 0;
-	if (p->table->philo_nbr % 2 == 0)
-	{
-		if (p->philo_id % 2 == 0)
-			want = p->table->time_to_eat / 2;
-	}
-	else
-	{
-		if (p->philo_id % 2 == 0)
-			want = p->table->time_to_eat;
-	}
-	return (want);
-}
-
-static size_t	calc_safe_delay(t_philo *p, size_t want)
-{
-	long	now;
-	long	last;
-	long	until_dead;
-	long	guard;
-	long	slack;
-
-	if (want == 0)
-		return (0);
-	last = get_long(&p->philo_mtx, &p->last_meal_time);
-	now = get_current_time();
-	until_dead = (long)p->table->time_to_die - (now - last);
-	if (until_dead <= (long)p->table->time_to_eat)
-		return (0);
-	guard = (long)p->table->time_to_die / 20;
-	if (guard < 1)
-		guard = 1;
-	if (guard > 6)
-		guard = 6;
-	slack = until_dead - (long)p->table->time_to_eat - guard;
-	if (slack <= 0)
-		return (0);
-	if ((long)want > slack)
-		want = (size_t)slack;
-	if (want < 1)
-		want = 1;
-	return (want);
-}
-
 static void	*philo_routine(void *arg)
 {
 	t_philo	*p;
-	size_t	want;
-	size_t	pre;
 
 	p = (t_philo *)arg;
 	while (!get_bool(&p->table->table_mutex, &p->table->all_thread_ready))
 		usleep(200);
-	want = start_want_delay(p);
-	pre = calc_safe_delay(p, want);
-	if (pre > 0)
-		ft_usleep(pre, p->table); /* ms-aware + เช็ค end_simulation */
+	if (p->philo_id % 2 == 0)
+		ft_usleep(1, p->table);
 	while (!get_bool(&p->table->table_mutex, &p->table->end_simulation))
 	{
 		if (get_bool(&p->philo_mtx, &p->full))

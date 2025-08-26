@@ -6,32 +6,30 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 19:44:46 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/25 08:47:44 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/26 08:52:45 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void assign_fork(t_philo *p, t_fork *forks, int i)
+static void	assign_fork(t_philo *p, t_fork *forks, int i)
 {
 	t_fork	*l;
 	t_fork	*r;
-
 
 	l = &forks[i];
 	r = &forks[(i + 1) % p->table->philo_nbr];
 	if (l->fork_id < r->fork_id)
 	{
-		p->first_fork  = l;
+		p->first_fork = l;
 		p->second_fork = r;
 	}
 	else
 	{
-		p->first_fork  = r;
+		p->first_fork = r;
 		p->second_fork = l;
 	}
 }
-
 
 static void	philo_init(t_table *table)
 {
