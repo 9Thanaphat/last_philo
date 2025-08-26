@@ -6,7 +6,7 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:01:36 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/26 09:55:17 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/26 10:17:24 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ static long	base_think_time(t_philo *p)
 static long	cap_think_to_safe(t_philo *p, long t)
 {
 	long	now;
-	long	since;
-	long	guard;
+	long	last_meal;
+	long	buffer;
 	long	safe;
 
 	now = get_current_time();
-	since = now - get_long(&p->philo_mtx, &p->last_meal_time);
-	guard = (long)p->table->time_to_die / 20;
-	if (guard < 1)
-		guard = 1;
-	if (guard > 6)
-		guard = 6;
-	safe = (long)p->table->time_to_die - since
-		- (long)p->table->time_to_eat - guard;
+	last_meal = now - get_long(&p->philo_mtx, &p->last_meal_time);
+	buffer = (long)p->table->time_to_die / 20;
+	if (buffer < 1)
+		buffer = 1;
+	if (buffer > 6)
+		buffer = 6;
+	safe = (long)p->table->time_to_die - last_meal
+		- (long)p->table->time_to_eat - buffer;
 	if (safe < 0)
 		safe = 0;
 	if (t > safe)
