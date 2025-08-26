@@ -12,30 +12,45 @@
 
 #include "philo.h"
 
-void	thinking(t_philo *p)
+static long cap_think_to_safe_window(t_philo *p, long t)
 {
-	long	t;
+    long now    = get_current_time();
+    long since  = now - get_long(&p->philo_mtx, &p->last_meal_time);
+    long guard  = (long)p->table->time_to_die / 20; // ~5% กันพลาดเล็กน้อย
+    if (guard < 1) guard = 1;
+    if (guard > 6) guard = 6;
 
-	t = 0;
-	print_status(THINKING, p);
-	if (p->table->time_to_eat >= p->table->time_to_sleep)
-	{
-		if (p->table->philo_nbr % 2 != 0)
-			t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
-		else
-			t = (long)p->table->time_to_eat - (long)p->table->time_to_sleep;
-	}
-	else
-	{
-		if (p->table->philo_nbr % 2 != 0)
-			t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
-		else
-			t = 0;
-	}
-	if (t < 0)
-		t = 0;
-	if (t > 0)
-		ft_usleep((size_t)t, p->table);
+    // ต้องเหลือเวลากินรอบหน้า + กันชน
+    long safe = (long)p->table->time_to_die - since - (long)p->table->time_to_eat - guard;
+    if (safe < 0) safe = 0;
+    if (t > safe) t = safe;
+    if (t < 0) t = 0;
+    return t;
+}
+
+void    thinking(t_philo *p)
+{
+    long t = 0;
+
+    print_status(THINKING, p);
+
+    if (p->table->time_to_eat >= p->table->time_to_sleep) {
+        if (p->table->philo_nbr % 2 != 0)
+            t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
+        else
+            t = (long)p->table->time_to_eat - (long)p->table->time_to_sleep;
+    } else {
+        if (p->table->philo_nbr % 2 != 0)
+            t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
+        else
+            t = 0;
+    }
+    if (t < 0) t = 0;
+    // --- เพิ่ม cap ตาม time_to_die ---
+    t = cap_think_to_safe_window(p, t);
+
+    if (t > 0)
+        ft_usleep((size_t)t, p->table);
 }
 
 void	sleeping(t_philo *p)
