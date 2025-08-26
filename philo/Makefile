@@ -6,7 +6,7 @@
 #    By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/24 23:31:37 by ttangcha          #+#    #+#              #
-#    Updated: 2025/08/24 23:31:38 by ttangcha         ###   ########.fr        #
+#    Updated: 2025/08/26 10:59:55 by ttangcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,9 @@ SOURCE  = main.c \
 			philo_routine.c \
 			simulation.c \
 			print.c \
-			utils.c \
+			utils.c
 
-HEADER  = .
+HEADER	= philo.h
 
 OFILE   = $(SOURCE:.c=.o)
 
@@ -35,8 +35,8 @@ all: $(NAME)
 $(NAME): $(OFILE)
 	$(CC) $(CFLAG) $(OFILE) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAG) -I $(HEADER) -c $< -o $@
+%.o: %.c $(HEADER) Makefile
+	$(CC) $(CFLAG) -I. -c $< -o $@
 
 clean:
 	rm -fv $(OFILE)
