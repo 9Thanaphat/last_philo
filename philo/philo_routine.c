@@ -6,51 +6,63 @@
 /*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 21:01:36 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/26 08:57:35 by ttangcha         ###   ########.fr       */
+/*   Updated: 2025/08/26 09:55:17 by ttangcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static long cap_think_to_safe_window(t_philo *p, long t)
+static long	base_think_time(t_philo *p)
 {
-    long now    = get_current_time();
-    long since  = now - get_long(&p->philo_mtx, &p->last_meal_time);
-    long guard  = (long)p->table->time_to_die / 20; // ~5% กันพลาดเล็กน้อย
-    if (guard < 1) guard = 1;
-    if (guard > 6) guard = 6;
+	long	t;
 
-    // ต้องเหลือเวลากินรอบหน้า + กันชน
-    long safe = (long)p->table->time_to_die - since - (long)p->table->time_to_eat - guard;
-    if (safe < 0) safe = 0;
-    if (t > safe) t = safe;
-    if (t < 0) t = 0;
-    return t;
+	if (p->table->philo_nbr % 2 != 0)
+		t = (long)p->table->time_to_eat * 2
+			- (long)p->table->time_to_sleep;
+	else if (p->table->time_to_eat >= p->table->time_to_sleep)
+		t = (long)p->table->time_to_eat
+			- (long)p->table->time_to_sleep;
+	else
+		t = 0;
+	if (t < 0)
+		t = 0;
+	return (t);
 }
 
-void    thinking(t_philo *p)
+static long	cap_think_to_safe(t_philo *p, long t)
 {
-    long t = 0;
+	long	now;
+	long	since;
+	long	guard;
+	long	safe;
 
-    print_status(THINKING, p);
+	now = get_current_time();
+	since = now - get_long(&p->philo_mtx, &p->last_meal_time);
+	guard = (long)p->table->time_to_die / 20;
+	if (guard < 1)
+		guard = 1;
+	if (guard > 6)
+		guard = 6;
+	safe = (long)p->table->time_to_die - since
+		- (long)p->table->time_to_eat - guard;
+	if (safe < 0)
+		safe = 0;
+	if (t > safe)
+		t = safe;
+	if (t < 0)
+		t = 0;
+	return (t);
+}
 
-    if (p->table->time_to_eat >= p->table->time_to_sleep) {
-        if (p->table->philo_nbr % 2 != 0)
-            t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
-        else
-            t = (long)p->table->time_to_eat - (long)p->table->time_to_sleep;
-    } else {
-        if (p->table->philo_nbr % 2 != 0)
-            t = (long)p->table->time_to_eat * 2 - (long)p->table->time_to_sleep;
-        else
-            t = 0;
-    }
-    if (t < 0) t = 0;
-    // --- เพิ่ม cap ตาม time_to_die ---
-    t = cap_think_to_safe_window(p, t);
+void	thinking(t_philo *p)
+{
+	long	t;
 
-    if (t > 0)
-        ft_usleep((size_t)t, p->table);
+	print_status(THINKING, p);
+	t = base_think_time(p);
+	t = cap_think_to_safe(p, t);
+	if (t > 0)
+		ft_usleep((size_t)t, p->table);
 }
 
 void	sleeping(t_philo *p)
