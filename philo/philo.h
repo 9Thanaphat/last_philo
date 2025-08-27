@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 21:02:47 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/26 10:59:14 by ttangcha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -77,6 +65,7 @@ void			parse(t_table *table, char **av);
 void			data_init(t_table *table);
 
 //monitor.c
+bool			philo_full(t_table *table);
 void			*monitor(void *arg);
 
 //simulation.c

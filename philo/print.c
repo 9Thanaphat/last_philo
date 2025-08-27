@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 19:45:14 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/26 08:42:41 by ttangcha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
 static void	print_message(t_philo_status s, size_t ts, int id)
@@ -43,6 +31,7 @@ void	print_status(t_philo_status s, t_philo *p)
 	}
 	ts = timestamp(p->table);
 	id = p->philo_id;
-	print_message(s, ts, id);
+	if (!philo_full(p->table))
+		print_message(s, ts, id);
 	pthread_mutex_unlock(&p->table->print_mutex);
 }

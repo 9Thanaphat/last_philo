@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 21:01:36 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/26 10:17:24 by ttangcha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
 static long	base_think_time(t_philo *p)
@@ -80,10 +68,10 @@ void	eating(t_philo *p)
 	set_long(&p->philo_mtx, &p->last_meal_time, get_current_time());
 	increase_nbr(&p->philo_mtx, &p->meals_count);
 	print_status(EATING, p);
-	ft_usleep(p->table->time_to_eat, p->table);
 	if (p->table->limit_meal_nbr > 0 && get_int(&p->philo_mtx,
 			&p->meals_count) == p->table->limit_meal_nbr)
 		set_bool(&p->philo_mtx, &p->full, true);
+	ft_usleep(p->table->time_to_eat, p->table);
 	pthread_mutex_unlock(&p->second_fork->fork);
 	pthread_mutex_unlock(&p->first_fork->fork);
 }

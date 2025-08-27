@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ttangcha <ttangcha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 19:44:57 by ttangcha          #+#    #+#             */
-/*   Updated: 2025/08/24 22:47:52 by ttangcha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "philo.h"
 
 static bool	philo_died_at(t_philo *p, long now_ms)
@@ -22,7 +10,7 @@ static bool	philo_died_at(t_philo *p, long now_ms)
 	return ((now_ms - last) >= p->table->time_to_die);
 }
 
-static bool	philo_full(t_table *table)
+bool	philo_full(t_table *table)
 {
 	bool	all_full;
 	int		i;
